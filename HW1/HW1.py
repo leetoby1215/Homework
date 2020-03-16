@@ -1,6 +1,6 @@
 import csv
 
-filename = 'sample.csv'
+filename = '107061144.csv'
 data = []
 SUM = 5*[0]
 
