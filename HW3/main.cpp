@@ -19,6 +19,7 @@
 #define FXOS8700Q_M_CTRL_REG1 0x5B
 #define FXOS8700Q_M_CTRL_REG2 0x5C
 #define FXOS8700Q_WHOAMI_VAL 0xC7
+#define duration 10
 
 I2C i2c( PTD9,PTD8);
 Serial pc(USBTX, USBRX);
@@ -33,7 +34,7 @@ float t[3];
 
 void detect() {
     bool is_over_45_degree = false;
-    while (true) {
+    for (int i = 0; i <= duration * 10; i++) {
         if (t[0] * t[0] + t[1] * t[1] > t[2] * t[2]) {
             is_over_45_degree = true;
             led = false;
@@ -41,9 +42,10 @@ void detect() {
             is_over_45_degree = false;
             led = true;
         }
-        pc.printf("[%1.4f,%1.4f,%1.4f,%d]\r\n", t[0], t[1], t[2], is_over_45_degree);
+        printf("[%1.4f,%1.4f,%1.4f,%d]\r\n", t[0], t[1], t[2], is_over_45_degree);
         wait(0.1);
     }
+    led = true;
 }
 
 void btn_fall() {
@@ -51,6 +53,8 @@ void btn_fall() {
 }
 
 int main() {
+    pc.baud(115200);
+
     uint8_t who_am_i, data[2], res[6];
     int16_t acc16;
 

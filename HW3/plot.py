@@ -12,7 +12,7 @@ z = []
 tilt = []
 
 serdev = '/dev/ttyACM0'
-s = serial.Serial(serdev)
+s = serial.Serial(serdev,115200)
 for i in range(0, duration * 10):
     line = str(s.readline())
     arr = line.split("[")[1].split("]")[0].split(',')
@@ -22,15 +22,16 @@ for i in range(0, duration * 10):
     tilt.append(int(arr[3]))
 
 fig, ax = plt.subplots(2, 1)
-ax[0].plot(t,x,label="$x$")
-ax[0].plot(t,y,label="$y$")
-ax[0].plot(t,z,label="$z$")
-ax[0].legend(loc='upper right')
+ax[0].plot(t, x, label = "$x$")
+ax[0].plot(t, y, label = "$y$")
+ax[0].plot(t, z, label = "$z$")
+ax[0].legend(loc = 'lower left')
 ax[0].set_xlabel('Time')
 ax[0].set_ylabel('Acc Vector')
-ax[1].plot(t,tilt,'bo')
+ax[1].plot(t, tilt, 'bo')
 for i in range(0, duration * 10):
-    ax[1].plot([t[i],t[i]],[0,tilt[i]],c="blue")
+    ax[1].plot([t[i], t[i]], [0,tilt[i]], c = "blue")
+ax[1].plot([0, duration], [0, 0], c = "red")
 ax[1].set_xlabel('Time')
 ax[1].set_ylabel('Tilt')
 plt.show()
