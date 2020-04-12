@@ -14,7 +14,6 @@ Thread thread1;
 Thread thread2;
 char table[10] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F};
 
-bool at_up = false;
 int frequency = 0;
 float avg = 0;
 float ADCdata[sample];
@@ -50,13 +49,9 @@ int main() {
 			}
 			avg /= sample;
 			frequency = 0;
-			for (int i = 0; i < sample; i++) {
-				if (!at_up && ADCdata[i] > avg) {
+			for (int i = 0; i < sample - 1; i++) {
+				if (ADCdata[i] < avg && ADCdata[i + 1] > avg) {
 					frequency++;
-					at_up = true;
-				}
-				if (ADCdata[i] < avg / 5) {
-					at_up = false;
 				}
 			}
 		} else {
