@@ -87,6 +87,7 @@ int main() {
         t[2] = ((float)acc16) / 4096.0f;
     }
 }
+
 void FXOS8700CQ_readRegs(int addr, uint8_t * data, int len) {
     char t = addr;
     i2c.write(m_addr, &t, 1, true);
